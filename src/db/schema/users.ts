@@ -8,7 +8,7 @@ import {
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
 
-export const pgTable = pgTableCreator((name) => `chirp_${name}`);
+const pgTable = pgTableCreator((name) => `chirp_${name}`);
 
 export const users = pgTable("user", {
   id: text("id")
