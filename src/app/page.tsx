@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-
+import { Feed } from "./components/feed";
 export default async function Home() {
   const session = await auth();
   if (!session?.user) {
@@ -12,8 +12,7 @@ export default async function Home() {
 
   return (
     <main className="w-1/3">
-      <h1>Signed in</h1>
-      {/* <pre>{JSON.stringify(session, null, 2)}</pre>; */}
+      <Feed />
     </main>
   );
 }
