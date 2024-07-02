@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 export function Profile({
   user,
@@ -18,7 +19,7 @@ export function Profile({
     return <SignInButton />;
   }
   return (
-    <div className="flex w-fit gap-3 rounded-lg border border-slate-400 p-4">
+    <div className="flex w-fit flex-row gap-3 rounded-full border border-slate-400 p-4">
       <Image
         src={user.image ?? "/default-profile.png"}
         className="h-14 w-14 rounded-full"
@@ -27,19 +28,17 @@ export function Profile({
         height={56}
       />
       <div className="flex flex-col">
-        <span className="text-2xl">{user.name}</span>
-        <div className="flex gap-1 text-slate-300">
-          <span>{`@${user.id} `}</span>
-        </div>
+        <span className="text-2xl text-slate-100">{user.name}</span>
+        <span className="text-slate-300">{`@${user.id} `}</span>
       </div>
-      <button
-        className="bg-slate-700 text-slate-50 rounded-md p-1"
+      <Button
+        className="rounded-md bg-slate-700 p-1 text-slate-50"
         onClick={async () => {
           await signOutAction();
         }}
       >
         Sign Out
-      </button>
+      </Button>
     </div>
   );
 }
@@ -48,7 +47,7 @@ function SignInButton() {
   return (
     <a
       href="/api/auth/signin"
-      className="bg-slate-700 text-slate-50 rounded-md p-1"
+      className="rounded-md bg-slate-700 p-1 text-slate-50"
     >
       Sign In
     </a>

@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex flex-row h-screen w-screen bg-slate-900 text-slate-50">
+        <div className="flex flex-row h-screen w-screen bg-slate-900 p-8">
           <SideNav />
           {children}
         </div>

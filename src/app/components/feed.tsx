@@ -4,7 +4,7 @@ import { Post } from "./post";
 export const Feed = async () => {
   const posts = await getAllPosts();
   return (
-    <div className=" text-slate-100 ">
+    <div className="flex w-full flex-col gap-3">
       {posts.map((post) => (
         <Post key={post.id} post={post} />
       ))}
