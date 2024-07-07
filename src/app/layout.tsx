@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -19,10 +20,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex flex-row h-screen w-screen bg-slate-900 p-8">
-          <SideNav />
-          {children}
-        </div>
+        <SessionProvider>
+          <div className="flex h-screen w-screen flex-row bg-slate-900 p-8">
+            <SideNav />
+            {children}
+          </div>
+        </SessionProvider>
       </body>
     </html>
   );
