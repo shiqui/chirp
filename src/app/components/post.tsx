@@ -1,4 +1,3 @@
-import Link from "next/link";
 import dayjs from "dayjs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -19,24 +18,22 @@ type PostProps = {
 
 export const Post = async ({ post }: { post: PostProps }) => {
   return (
-    <div className="flex gap-3 rounded-2xl border border-slate-400 p-4">
+    <div className="flex w-full flex-row gap-3 py-3">
       <Avatar>
         <AvatarImage src={post.user.image ?? ""} />
         <AvatarFallback>{post.user.name}</AvatarFallback>
       </Avatar>
 
       <div className="flex flex-col">
-        <div className="flex gap-1 text-slate-300">
-          <Link href={`/`}>
-            <span>{`@${post.user.name} `}</span>
-          </Link>
-          <Link href={`/post/`}>
-            <span className="font-thin">{` · ${dayjs(
-              post.createdAt,
-            ).fromNow()}`}</span>
-          </Link>
+        <div className="gap-1 text-primary-foreground">
+          <span>{`@${post.user.name} `}</span>
+          <span className="font-thin">{` · ${dayjs(
+            post.createdAt,
+          ).fromNow()}`}</span>
         </div>
-        <span className="text-2xl text-slate-100">{post.content}</span>
+        <span className="flex-grow break-words text-2xl text-primary-foreground">
+          {post.content}
+        </span>
       </div>
     </div>
   );
