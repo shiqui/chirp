@@ -4,22 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { revalidatePath } from "next/cache";
+import { useSession } from "next-auth/react";
+import { createPost } from "@/db/actions/posts";
 
-type CreatePostFormProps = {
-  user: {
-    id: string;
-    name: string | null;
-    image: string | null;
-  } | null;
-  action: (authorId: string, content: string) => Promise<void>;
-};
+export default function CreatePostForm() {
+  const { data: session } = useSession();
+  const user = session?.user;
 
-export default function CreatePostForm({ user, action }: CreatePostFormProps) {
   const [content, setContent] = useState("");
 
   if (!user) {
-    return <div>Sign in to post</div>;
+    return <span className="text-primary-foreground">Sign in to post</span>;
   }
 
   return (
@@ -30,16 +25,17 @@ export default function CreatePostForm({ user, action }: CreatePostFormProps) {
       </Avatar>
       <Input
         placeholder="What's on your mind?"
-        className="grow bg-transparent outline-none"
+        className="grow bg-transparent text-primary-foreground outline-none"
         type="text"
         value={content}
         onChange={(e) => setContent(e.target.value)}
       />
       <Button
         variant="ghost"
-        onClick={() => {
+        className="text-primary-foreground"
+        onClick={async () => {
           if (content.trim() === "") return;
-          action(user.id, content);
+          await createPost(content);
           setContent("");
         }}
       >
