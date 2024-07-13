@@ -23,7 +23,8 @@ export default function RootLayout({
         <SessionProvider>
           <div className="flex h-screen w-screen flex-row bg-slate-900 p-8">
             <SideNav />
-            {children}
+            <div className="w-1/3">{children}</div>
+            <div className="w-1/3"></div>
           </div>
         </SessionProvider>
       </body>
