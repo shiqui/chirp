@@ -1,4 +1,5 @@
 import { getAllPosts } from "@/db/queries/posts";
+
 import { Post } from "./post";
 
 export const Feed = async () => {

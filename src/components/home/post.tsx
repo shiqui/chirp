@@ -1,7 +1,8 @@
-import dayjs from "dayjs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
+import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Link from "next/link";
+
 dayjs.extend(relativeTime);
 
 type PostProps = {
@@ -25,19 +26,14 @@ export const Post = async ({ post }: { post: PostProps }) => {
       </Avatar>
 
       <div className="flex flex-grow flex-col">
-        <div className="gap-1 text-primary-foreground">
+        <div className="gap-1">
           <span>{`@${post.user.name} `}</span>
           <span className="font-thin">{` · ${dayjs(
             post.createdAt,
           ).fromNow()}`}</span>
         </div>
-        <Link
-          href={`post/${post.id}`}
-          className="rounded-sm hover:bg-slate-600"
-        >
-          <span className="w-full break-words text-2xl text-primary-foreground">
-            {post.content}
-          </span>
+        <Link href={`post/${post.id}`} className="rounded-sm hover:bg-muted">
+          <span className="w-full break-words text-2xl">{post.content}</span>
         </Link>
       </div>
     </div>
