@@ -1,5 +1,5 @@
-import { Feed } from "./components/feed";
-import CreatePostForm from "./components/create-post-form";
+import { Feed } from "@/components/home/feed";
+import CreatePostForm from "@/components/home/create-post-form";
 
 export default async function Home() {
   return (

@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { createPost } from "@/db/actions/posts";
+import { useFormStatus } from "react-dom";
+import Spinner from "../ui/spinner";
 
 export default function CreatePostForm() {
   const { data: session } = useSession();
@@ -23,25 +25,41 @@ export default function CreatePostForm() {
         <AvatarImage src={user.image ?? ""} />
         <AvatarFallback>{user.name}</AvatarFallback>
       </Avatar>
-      <Input
-        placeholder="What's on your mind?"
-        className="grow bg-transparent text-primary-foreground outline-none"
-        type="text"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
-      <Button
-        variant="ghost"
-        className="text-primary-foreground"
-        onClick={async () => {
+      <form
+        className="flex grow flex-row gap-3"
+        action={async () => {
           if (content.trim() === "") return;
           await createPost(content);
           setContent("");
         }}
       >
-        Post
-      </Button>
+        <Input
+          placeholder="What's on your mind?"
+          className="grow bg-transparent text-primary-foreground outline-none"
+          type="text"
+          value={content}
+          onChange={(e) => {
+            console.log(e);
+            setContent(e.target.value);
+          }}
+        />
+        <PostButton />
+      </form>
       <div className="flex justify-end"></div>
     </div>
+  );
+}
+
+function PostButton() {
+  const { pending } = useFormStatus();
+  return (
+    <Button
+      variant="ghost"
+      className="w-20 text-primary-foreground"
+      type="submit"
+      disabled={pending}
+    >
+      {pending ? <Spinner /> : "Post"}
+    </Button>
   );
 }

@@ -3,7 +3,7 @@ import { SessionProvider } from "next-auth/react";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
-import SideNav from "./components/side-nav";
+import SideNav from "../components/home/side-nav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,8 +22,8 @@ export default function RootLayout({
       <body className={inter.className}>
         <SessionProvider>
           <SideNav />
-          <div className="flex h-full min-h-screen w-full flex-row justify-center bg-slate-900 p-8">
-            <div className="w-1/3">{children}</div>
+          <div className="flex h-full min-h-screen w-full flex-row justify-center bg-slate-900">
+            <div className="w-1/3 py-8">{children}</div>
           </div>
         </SessionProvider>
       </body>
