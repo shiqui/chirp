@@ -36,20 +36,25 @@ export default function CreatePostForm() {
         </Avatar>
         <form
           className="flex flex-col gap-3 w-full"
-          action={async () => {
-            if (content.trim() === "") return;
-            await createPost(content);
+          action={createPost}
+          onSubmit={() => {
             setContent("");
           }}
         >
           <div className="flex flex-row gap-3 w-full">
             <Input
-              placeholder="What's on your mind?"
+              placeholder="What's on your mind? Emojis only!"
               className="grow bg-transparent outline-none border-none focus-visible:ring-0 focus-visible:ring-offset-0"
               type="text"
+              name="content"
               value={content}
+              autoComplete="off"
+              required={true}
               onChange={(e) => {
-                setContent(e.target.value);
+                const emojiRegex = /[\p{Emoji_Presentation}\u200d]+/gu;
+                const input = e.target.value;
+                const filteredInput = input.match(emojiRegex)?.join("") || "";
+                setContent(filteredInput.slice(0, 140));
               }}
             />
             <PostButton />
@@ -57,7 +62,7 @@ export default function CreatePostForm() {
           <div>
             <EmojiButton
               onEmojiSelect={(emoji) => {
-                console.log(emoji);
+                if (content.length >= 140) return;
                 setContent((prev) => prev + emoji.native);
               }}
             />

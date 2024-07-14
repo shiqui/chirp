@@ -1,10 +1,12 @@
 "use server";
+
 import { auth } from "@/auth";
-import { db } from "..";
-import { posts } from "../schema";
 import { revalidatePath } from "next/cache";
 
-export const createPost = async (content: string) => {
+import { db } from "..";
+import { posts } from "../schema";
+
+export const createPost = async (formData: FormData) => {
   const session = await auth();
   if (!session) {
     throw new Error("Unauthorized");
@@ -12,7 +14,13 @@ export const createPost = async (content: string) => {
   if (!session?.user?.id) {
     throw new Error("No user ID in session");
   }
+
   const authorId = session.user.id;
+
+  const content = formData.get("content")?.toString();
+  if (!content) {
+    throw new Error("Content is required");
+  }
   await db.insert(posts).values({ authorId, content });
   revalidatePath("/");
 };
