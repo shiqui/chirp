@@ -9,3 +9,13 @@ export const getAllPosts = async () => {
   });
   return posts;
 };
+
+export const getPostFromId = async (id: number) => {
+  const post = await db.query.posts.findFirst({
+    where: (post, { eq }) => eq(post.id, id),
+    with: {
+      user: true,
+    },
+  });
+  return post;
+};

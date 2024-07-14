@@ -21,10 +21,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider>
-          <div className="flex h-screen w-screen flex-row bg-slate-900 p-8">
-            <SideNav />
+          <SideNav />
+          <div className="flex h-full min-h-screen w-full flex-row justify-center bg-slate-900 p-8">
             <div className="w-1/3">{children}</div>
-            <div className="w-1/3"></div>
           </div>
         </SessionProvider>
       </body>

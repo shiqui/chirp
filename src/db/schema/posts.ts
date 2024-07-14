@@ -24,7 +24,7 @@ export const posts = pgTable(
   },
   (example) => ({
     authorIdIndex: index("authorId_idx").on(example.authorId),
-  })
+  }),
 );
 
 export const postsRelactions = relations(posts, ({ one }) => ({
