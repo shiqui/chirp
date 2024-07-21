@@ -21,9 +21,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} dark`}>
         <SessionProvider>
-          <SideNav />
-          <div className="flex h-full min-h-screen w-full flex-row justify-center">
-            <div className="w-1/3 py-8">{children}</div>
+          <div className="w-full overflow-x-hidden">
+            <SideNav />
+            <div className="flex h-full min-h-screen w-screen flex-row justify-center">
+              <div className="w-1/3 py-8">{children}</div>
+            </div>
           </div>
         </SessionProvider>
       </body>
