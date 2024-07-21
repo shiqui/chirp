@@ -7,7 +7,7 @@ export const Feed = async () => {
   return (
     <div className="flex flex-col overflow-y-auto">
       {posts.map((post) => (
-        <Post key={post.id} post={post} />
+        <Post key={post.id} {...post} />
       ))}
     </div>
   );
