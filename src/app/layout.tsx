@@ -19,11 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} dark`}>
+      <body className={`${inter.className} dark overflow-x-hidden`}>
         <SessionProvider>
-          <div className="w-full overflow-x-hidden">
+          <div className="w-screen overflow-x-hidden">
             <SideNav />
-            <div className="flex h-full min-h-screen w-screen flex-row justify-center">
+            <div className="flex h-full min-h-screen w-full flex-row justify-center">
               <div className="w-1/3 py-8">{children}</div>
             </div>
           </div>
