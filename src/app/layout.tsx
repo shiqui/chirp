@@ -1,8 +1,9 @@
+import BottomNav from "@/components/home/bottom-nav";
+import SideNav from "@/components/home/side-nav";
 import type { Metadata } from "next";
 import { SessionProvider } from "next-auth/react";
 import { Inter } from "next/font/google";
 
-import SideNav from "../components/home/side-nav";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -21,10 +22,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} dark overflow-x-hidden`}>
         <SessionProvider>
-          <div className="w-screen overflow-x-hidden">
+          <div className="w-screen min-h-screen">
             <SideNav />
             <div className="flex h-full min-h-screen w-full flex-row justify-center">
-              <div className="w-1/3 py-8">{children}</div>
+              <div className="w-full lg:w-1/3 py-8 z-10">{children}</div>
             </div>
           </div>
         </SessionProvider>

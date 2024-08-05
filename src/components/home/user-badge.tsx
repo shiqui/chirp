@@ -16,7 +16,9 @@ export function UserBadge() {
         <AvatarFallback>{}</AvatarFallback>
       </Avatar>
 
-      <span className="grow text-2xl">@{user?.name}</span>
+      <span className="grow text-xl overflow-x-hidden whitespace-nowrap">
+        @{user?.name}
+      </span>
       {session ? <SignOutButton /> : <SignInButton />}
     </div>
   );

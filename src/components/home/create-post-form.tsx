@@ -28,7 +28,7 @@ export default function CreatePostForm() {
   }
 
   return (
-    <div className="sticky top-0 flex flex-col gap-3 bg-background pt-4 z-10">
+    <div className="sticky top-0 flex flex-col gap-3 bg-background pt-4 z-20">
       <div className="flex flex-row gap-3">
         <Avatar>
           <AvatarImage src={user.image ?? ""} />
