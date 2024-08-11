@@ -24,6 +24,9 @@ export const getPostFromAuthorId = async (authorId: string) => {
   const posts = await db.query.posts.findMany({
     where: (post, { eq }) => eq(post.authorId, authorId),
     orderBy: (post, { desc }) => [desc(post.createdAt)],
+    with: {
+      user: true,
+    },
   });
   return posts;
 };

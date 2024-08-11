@@ -5,7 +5,7 @@ import Link from "next/link";
 
 dayjs.extend(relativeTime);
 
-export const Post = async ({
+export function Post({
   id,
   content,
   createdAt,
@@ -20,7 +20,7 @@ export const Post = async ({
     name?: string | null;
     image?: string | null;
   };
-}) => {
+}) {
   return (
     <div className="flex w-full flex-row gap-3 py-3">
       <Avatar>
@@ -41,4 +41,4 @@ export const Post = async ({
       </div>
     </div>
   );
-};
+}

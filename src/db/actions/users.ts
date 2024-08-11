@@ -10,19 +10,26 @@ import { users } from "../schema";
 export const updateUser = async (formData: FormData) => {
   const session = await auth();
   if (!session) {
-    throw new Error("Unauthorized");
+    return "Unauthorized";
   }
+
   if (!session?.user?.id) {
-    throw new Error("No user ID in session");
+    return "No user ID in session";
   }
+
   const userId = session.user.id;
-  const name = formData.get("name")?.toString();
+  const name = formData.get("username")?.toString();
   if (!name) {
-    return "Name is required";
+    return "New username is required";
   }
+
   if (name.length > 50) {
-    return "Name is too long";
+    return "New username is too long";
   }
+
   await db.update(users).set({ name: name }).where(eq(users.id, userId));
+
   revalidatePath("/me");
+  revalidatePath("/");
+  return null;
 };
