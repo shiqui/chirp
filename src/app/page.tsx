@@ -1,13 +1,7 @@
-import CreatePostForm from "@/components/home/create-post-form";
-import { Feed } from "@/components/home/feed";
+import { Button } from "@/components/ui/button";
 
-export const dynamic = "force-dynamic";
-
-export default async function Home() {
+export default function Home() {
   return (
-    <main className="flex w-full flex-col gap-3">
-      <CreatePostForm />
-      <Feed />
-    </main>
+    <main className="flex items-center justify-center h-screen">main</main>
   );
 }
