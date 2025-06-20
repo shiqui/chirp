@@ -1,11 +1,13 @@
-import { Button } from "@/components/ui/button";
+import { Feed } from "@/components/feed";
+import CreatePostForm from "@/components/feed/create-post-form";
 import { auth } from "@/lib/auth";
 
-export default async function Home() {
+export default async function HomePage() {
   const session = await auth();
   return (
-    <main className="flex items-center justify-center h-screen">
-      {JSON.stringify(session, null, 2)}
+    <main>
+      <CreatePostForm session={session} />
+      <Feed />
     </main>
   );
 }

@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import {
   boolean,
   timestamp,
@@ -5,6 +6,7 @@ import {
   primaryKey,
   integer,
   pgTableCreator,
+  varchar,
 } from "drizzle-orm/pg-core";
 import type { AdapterAccountType } from "next-auth/adapters";
 
@@ -18,6 +20,8 @@ export const users = pgTable("user", {
   email: text("email").unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
 });
 
 export const accounts = pgTable(
@@ -92,3 +96,17 @@ export const authenticators = pgTable(
     },
   ]
 );
+
+export const posts = pgTable("post", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  content: varchar({ length: 256 }),
+  authorId: varchar("author_id", { length: 255 })
+    .notNull()
+    .references(() => users.id),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
+});
+
+export const authorPostRelations = relations(posts, ({ one }) => ({
+  author: one(users, { fields: [posts.authorId], references: [users.id] }),
+}));
