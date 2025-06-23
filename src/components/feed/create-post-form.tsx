@@ -4,7 +4,9 @@ import { Session } from "next-auth";
 import { Card } from "../ui/card";
 import { useActionState, useState } from "react";
 import { createPost } from "@/db/actions/post";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 
 export default function CreatePostForm({
   session,
@@ -26,11 +28,19 @@ export default function CreatePostForm({
 
   return (
     <Card className="w-full max-w-2xl p-4">
-      <form action={action}>
-        <textarea
+      <form
+        action={action}
+        onSubmit={() =>
+          toast("Post created.", { description: new Date().toDateString() })
+        }
+        className="flex flex-col gap-4"
+      >
+        <Textarea
           name="content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
+          placeholder="What's on your mind?"
+          className="field-sizing-content resize-none"
         />
         <Button type="submit" disabled={pending}>
           Post

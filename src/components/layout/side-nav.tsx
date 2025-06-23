@@ -10,7 +10,7 @@ const navLinks = [
 export default async function SideNav() {
   const session = await auth();
   return (
-    <aside className="flex flex-col items-center">
+    <aside className="fixed top-0 left-0 w-1/3 flex flex-col items-center">
       <h1 className="text-2xl font-bold mb-4">Chirp</h1>
 
       <nav className="grow flex flex-col items-start p-4 space-y-2">
