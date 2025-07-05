@@ -48,11 +48,7 @@ export default function CreatePostForm({
         {createPostState?.error && (
           <ServerAlertCard warning={createPostState.error} />
         )}
-        <Button
-          type="submit"
-          disabled={pending || !content.trim()}
-          className="self-end"
-        >
+        <Button type="submit" disabled={pending || !content.trim()}>
           {pending ? "" : "Post"}
           {pending ? <LoaderCircle className="animate-spin" /> : <Send />}
         </Button>
