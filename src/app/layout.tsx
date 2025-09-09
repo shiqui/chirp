@@ -36,14 +36,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          {modal}
           <div className="grid grid-cols-3">
             <div className="relative">
               <SideNav />
             </div>
-            <div className="">
-              {children}
-              {modal}
-            </div>
+            <div className="">{children}</div>
           </div>
           <Toaster />
         </ThemeProvider>
