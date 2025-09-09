@@ -9,7 +9,7 @@ dayjs.extend(relativeTime);
 export function PostCard({ post }: { post: PostWithAuthor }) {
   return (
     <Link href={`post/${post.id}`}>
-      <Card className="w-full max-w-2xl p-6 flex flex-row gap-4">
+      <Card className="w-full p-6 flex flex-row gap-4">
         <Avatar>
           <AvatarImage src={post.author.image ?? ""} />
           <AvatarFallback className="border border-accent-foregroud">

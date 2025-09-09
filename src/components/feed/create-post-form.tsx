@@ -20,14 +20,16 @@ export default function CreatePostForm({
 
   useEffect(() => {
     if (createPostState?.success) {
-      toast("Post created.", { description: new Date().toDateString() });
+      toast("Post created.", {
+        description: new Date(createPostState.timestamp).toDateString(),
+      });
       setContent("");
     }
-  }, [createPostState]);
+  }, [createPostState?.timestamp]);
 
   if (!session) {
     return (
-      <Card className="w-full max-w-2xl p-4">
+      <Card className="w-full p-4">
         <p className="text-center text-muted-foreground">
           Sign in to share your thoughts!
         </p>
@@ -36,7 +38,7 @@ export default function CreatePostForm({
   }
 
   return (
-    <Card className="w-full max-w-2xl p-4">
+    <Card className="w-full p-4">
       <form action={action} className="flex flex-col gap-4">
         <Textarea
           name="content"

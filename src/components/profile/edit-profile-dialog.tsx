@@ -25,11 +25,13 @@ export function EditProfileDialog() {
 
   useEffect(() => {
     if (updateProfileState?.success) {
-      toast("Profile updated.", { description: new Date().toDateString() });
+      toast("Profile updated.", {
+        description: new Date(updateProfileState.timestamp).toDateString(),
+      });
       setUsername("");
       setOpen(false);
     }
-  }, [updateProfileState]);
+  }, [updateProfileState?.timestamp]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
