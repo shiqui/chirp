@@ -23,7 +23,7 @@ export function PostCard({ post }: { post: PostWithAuthor }) {
               {dayjs(post.createdAt).fromNow()}
             </p>
           </div>
-          <p>{post.content}</p>
+          <p className="whitespace-pre-wrap">{post.content}</p>
         </div>
       </Card>
     </Link>

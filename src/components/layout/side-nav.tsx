@@ -7,7 +7,7 @@ import { Separator } from "../ui/separator";
 
 const navLinks = [
   { href: "/", label: "Home", logo: <House /> },
-  { href: "/me", label: "Profile", logo: <CircleUser /> },
+  { href: "/profile", label: "Profile", logo: <CircleUser /> },
 ];
 
 export default async function SideNav() {

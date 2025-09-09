@@ -42,7 +42,24 @@ export const createPost = async (
       error: "Content is empty" as const,
     };
   }
-  await db.insert(posts).values({ authorId, content });
+
+  const emojiRegex = /^[\p{Emoji}\s\n\r]+$/u;
+  if (!emojiRegex.test(content)) {
+    return {
+      success: false as const,
+      error: "Only emojis, spaces, and newlines are allowed" as const,
+    };
+  }
+
+  try {
+    await db.insert(posts).values({ authorId, content });
+  } catch (error) {
+    console.error(error);
+    return {
+      success: false as const,
+      error: "Database error" as const,
+    };
+  }
   revalidatePath("/");
   return {
     success: true as const,

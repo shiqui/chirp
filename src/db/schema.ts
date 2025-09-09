@@ -99,7 +99,7 @@ export const authenticators = pgTable(
 
 export const posts = pgTable("post", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  content: varchar({ length: 256 }),
+  content: varchar(),
   authorId: varchar("author_id", { length: 255 })
     .notNull()
     .references(() => users.id),
