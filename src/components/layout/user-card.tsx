@@ -16,7 +16,7 @@ export default function UserCard({ session }: { session: Session | null }) {
         </AvatarFallback>
       </Avatar>
       <span className="font-semibold grow">
-        {session ? "@" + session.user?.name : "Guest"}
+        {session ? session.user?.name : "Guest"}
       </span>
       {session ? (
         <Button onClick={() => signOut()}>Sign out</Button>

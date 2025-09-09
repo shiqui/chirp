@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import SideNav from "@/components/layout/side-nav";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
+import Explore from "@/components/layout/explore";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,6 +44,10 @@ export default function RootLayout({
               <SideNav />
             </div>
             <div className="">{children}</div>
+            <div className="relative p-6 w-full">
+              <ThemeToggle />
+              <Explore />
+            </div>
           </div>
           <Toaster />
         </ThemeProvider>

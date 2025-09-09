@@ -1,10 +1,9 @@
 "use server";
-
 import { auth } from "@/lib/auth";
-import { revalidatePath } from "next/cache";
-
+import { eq } from "drizzle-orm/sql/expressions/conditions";
+import { users } from "../schema";
 import { db } from "..";
-import { posts } from "../schema";
+import { revalidatePath } from "next/cache";
 
 type Result =
   | {
@@ -15,15 +14,15 @@ type Result =
       error: string;
     };
 
-export const createPost = async (
+export async function updateUserProfile(
   currentState: Result | null,
   formData: FormData
-) => {
+) {
   const session = await auth();
   if (!session) {
     return {
       success: false as const,
-      error: "You must be signed in to create a post" as const,
+      error: "You must be signed in to edit your profile" as const,
     };
   }
   if (!session?.user?.id) {
@@ -32,34 +31,33 @@ export const createPost = async (
       error: "Your session has no user ID" as const,
     };
   }
-
   const authorId = session.user.id;
 
-  const content = formData.get("content")?.toString();
-  if (!content) {
+  const username = formData.get("username")?.toString();
+  if (!username || username.trim().length === 0) {
     return {
       success: false as const,
-      error: "Content is empty" as const,
+      error: "Username cannot be empty" as const,
     };
   }
-
-  const emojiRegex = /^[\p{Emoji}\s\n\r]+$/u;
-  if (!emojiRegex.test(content)) {
+  if (username.length > 30) {
     return {
       success: false as const,
-      error: "Only emojis, spaces, and newlines are allowed" as const,
+      error: "Username is too long" as const,
     };
   }
-
   try {
-    await db.insert(posts).values({ authorId, content });
+    await db
+      .update(users)
+      .set({ name: username, updatedAt: new Date() })
+      .where(eq(users.id, authorId));
   } catch (error) {
-    console.error(error);
     return {
       success: false as const,
       error: "Database error" as const,
     };
   }
-  revalidatePath("/");
+
+  revalidatePath("/profile");
   return { success: true as const };
-};
+}

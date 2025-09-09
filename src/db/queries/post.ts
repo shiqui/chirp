@@ -15,3 +15,11 @@ export function getPostById(id: number) {
     where: eq(posts.id, id),
   });
 }
+
+export function getPostsByAuthorId(id: string) {
+  return db.query.posts.findMany({
+    with: { author: true },
+    where: eq(posts.authorId, id),
+    orderBy: [desc(posts.createdAt)],
+  });
+}
