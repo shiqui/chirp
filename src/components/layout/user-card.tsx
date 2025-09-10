@@ -10,7 +10,7 @@ export default function UserCard({ session }: { session: Session | null }) {
   return (
     <Card className="w-full max-w-sm flex flex-row items-center gap-4 p-6">
       <Avatar>
-        <AvatarImage src={session?.user?.image ?? ""} />
+        {session?.user?.image && <AvatarImage src={session.user.image} />}
         <AvatarFallback className="border border-accent-foregroud" delayMs={10}>
           {session?.user?.name ?? ""}
         </AvatarFallback>

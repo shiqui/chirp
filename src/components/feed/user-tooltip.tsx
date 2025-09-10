@@ -26,7 +26,7 @@ export async function UserTooltip({
     <div className="p-4 w-64 flex flex-col gap-2">
       <div className="flex justify-between">
         <Avatar className="w-16 h-16">
-          <AvatarImage src={author.image ?? ""} />
+          {author.image && <AvatarImage src={author.image} />}
           <AvatarFallback className="border border-accent-foregroud">
             {author.name ?? ""}
           </AvatarFallback>

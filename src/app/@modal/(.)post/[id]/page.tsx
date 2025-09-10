@@ -28,7 +28,7 @@ export default async function Page({
     <Modal>
       <div className="w-full p-6 flex flex-row gap-4">
         <Avatar>
-          <AvatarImage src={post.author.image ?? ""} />
+          {post.author.image && <AvatarImage src={post.author.image} />}
           <AvatarFallback className="border border-accent-foregroud">
             {post.author.name ?? ""}
           </AvatarFallback>

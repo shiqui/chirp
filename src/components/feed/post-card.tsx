@@ -20,7 +20,7 @@ export function PostCard({
       <Tooltip>
         <TooltipTrigger asChild>
           <Avatar>
-            <AvatarImage src={post.author.image ?? ""} />
+            {post.author.image && <AvatarImage src={post.author.image} />}
             <AvatarFallback className="border border-accent-foregroud">
               {post.author.name ?? ""}
             </AvatarFallback>
