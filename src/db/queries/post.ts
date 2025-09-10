@@ -42,3 +42,33 @@ export async function getPostsByAuthorId(id: string) {
     orderBy: [desc(posts.createdAt)],
   });
 }
+
+export async function getEmojisOfTheDay() {
+  const oneDayAgo = new Date();
+  oneDayAgo.setDate(oneDayAgo.getDate() - 1);
+
+  const postsToday = await db.query.posts.findMany({
+    with: { author: true },
+    where: (posts, { gt }) => gt(posts.createdAt, oneDayAgo),
+  });
+  if (!postsToday) {
+    return [] as [string, number][];
+  }
+
+  const frequencyMap = new Map<string, number>();
+  postsToday.forEach((post) => {
+    const content = post.content ?? "";
+    const groups = content.matchAll(
+      /(?:\p{Emoji}(?:\p{Emoji_Modifier}|\uFE0F)?(?:\u200D\p{Emoji})*)/gu
+    );
+    groups.forEach((emojis) => {
+      emojis.forEach((emoji) => {
+        frequencyMap.set(emoji, (frequencyMap.get(emoji) || 0) + 1);
+      });
+    });
+  });
+
+  return Array.from(frequencyMap.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+}

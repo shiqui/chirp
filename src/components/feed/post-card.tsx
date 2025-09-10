@@ -8,7 +8,13 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { UserTooltip } from "./user-tooltip";
 dayjs.extend(relativeTime);
 
-export function PostCard({ post }: { post: PostWithAuthor }) {
+export function PostCard({
+  post,
+  popup = true,
+}: {
+  post: PostWithAuthor;
+  popup?: boolean;
+}) {
   return (
     <Card className="w-full p-6 flex flex-row gap-4">
       <Tooltip>
@@ -33,9 +39,13 @@ export function PostCard({ post }: { post: PostWithAuthor }) {
           </p>
         </div>
 
-        <Link href={`post/${post.id}`}>
+        {popup ? (
+          <Link href={`post/${post.id}`}>
+            <p className="whitespace-pre-wrap break-all">{post.content}</p>
+          </Link>
+        ) : (
           <p className="whitespace-pre-wrap break-all">{post.content}</p>
-        </Link>
+        )}
       </div>
     </Card>
   );

@@ -5,7 +5,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import SideNav from "@/components/layout/side-nav";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
-import Explore from "@/components/layout/explore";
+import TopEmoji from "@/components/layout/top-emoji";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,14 +39,14 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {modal}
-          <div className="grid grid-cols-3">
+          <div className="grid grid-cols-3 h-full">
             <div className="relative">
               <SideNav />
             </div>
-            <div className="">{children}</div>
+            <div>{children}</div>
             <div className="relative p-6 w-full">
               <ThemeToggle />
-              <Explore />
+              <TopEmoji />
             </div>
           </div>
           <Toaster />

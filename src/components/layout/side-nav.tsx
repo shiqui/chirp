@@ -1,12 +1,12 @@
 import { auth } from "@/lib/auth";
 import UserCard from "./user-card";
 import Link from "next/link";
-import { Bird, CircleUser, Newspaper, UserRoundCheck } from "lucide-react";
+import { Bird, CircleUser, Telescope, UserRoundCheck } from "lucide-react";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 
 const navLinks = [
-  { href: "/", label: "Feed", logo: <Newspaper /> },
+  { href: "/", label: "Feed", logo: <Telescope /> },
   { href: "/following", label: "Following", logo: <UserRoundCheck /> },
   { href: "/profile", label: "Profile", logo: <CircleUser /> },
 ];

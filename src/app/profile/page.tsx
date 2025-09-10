@@ -12,7 +12,16 @@ export default async function ProfilePage() {
   const session = await auth();
 
   if (!session || !session.user || !session.user.id) {
-    return <p className="p-6">Sign in to see your profile</p>;
+    return (
+      <div className="pt-6 flex items-center gap-2">
+        <span className="text-3xl">🤖</span>
+        <span className="italic">EEE-UHHH...</span>
+        <span className="text-3xl">🤚</span>
+        <span className="italic">
+          You must be signed in to see your profile...
+        </span>
+      </div>
+    );
   }
   const posts = await getPostsByAuthorId(session.user.id);
   const [followerCount, followingCount] = await Promise.all([
@@ -22,7 +31,7 @@ export default async function ProfilePage() {
 
   return (
     <div className="w-full h-full flex flex-col gap-4 items-center">
-      <div className="sticky top-0 py-6 w-full z-10 bg-gradient-to-b from-background from-90% to-transparent">
+      <div className="sticky top-0 pt-6 w-full z-10 bg-gradient-to-b from-background from-90% to-transparent">
         <ProfileCard
           session={session}
           followerCount={followerCount}
