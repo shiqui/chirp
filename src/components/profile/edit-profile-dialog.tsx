@@ -14,6 +14,7 @@ import { updateUserProfile } from "@/db/actions/user";
 import { AlertCircleIcon, LoaderCircle, Settings } from "lucide-react";
 import { toast } from "sonner";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import { Textarea } from "../ui/textarea";
 
 export function EditProfileDialog() {
   const [updateProfileState, action, pending] = useActionState(
@@ -21,6 +22,7 @@ export function EditProfileDialog() {
     null
   );
   const [username, setUsername] = useState("");
+  const [bio, setBio] = useState("");
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -47,9 +49,15 @@ export function EditProfileDialog() {
         <form action={action} className="flex flex-col gap-4">
           <Input
             name="username"
-            placeholder="username"
+            placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+          />
+          <Textarea
+            name="bio"
+            placeholder="Bio"
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
           />
           {updateProfileState?.error && (
             <ServerAlertCard warning={updateProfileState.error} />

@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, { DefaultSession } from "next-auth";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/db";
 import { accounts, sessions, users, verificationTokens } from "@/db/schema";
@@ -13,3 +13,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   }),
   providers: [GitHub],
 });
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      bio: string | null;
+    } & DefaultSession["user"];
+  }
+}

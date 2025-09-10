@@ -20,6 +20,7 @@ export const users = pgTable("user", {
   email: text("email").unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  bio: text("bio"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
 });
@@ -114,10 +115,10 @@ export const authorPostRelations = relations(posts, ({ one }) => ({
 export const follows = pgTable(
   "follow",
   {
-    followerId: text("follower_id")
+    followerId: text("followerId")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
-    followingId: text("following_id")
+    followingId: text("followingId")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     createdAt: timestamp("created_at").notNull().defaultNow(),
@@ -128,3 +129,14 @@ export const follows = pgTable(
     }),
   ]
 );
+
+export const followRelations = relations(follows, ({ one }) => ({
+  follower: one(users, {
+    fields: [follows.followerId],
+    references: [users.id],
+  }),
+  following: one(users, {
+    fields: [follows.followingId],
+    references: [users.id],
+  }),
+}));

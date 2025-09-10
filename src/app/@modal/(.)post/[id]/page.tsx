@@ -12,7 +12,7 @@ export default async function Page({
 
   return (
     <Modal>
-      <p>{post?.content}</p>
+      <p className="whitespace-pre-wrap break-all">{post?.content}</p>
     </Modal>
   );
 }

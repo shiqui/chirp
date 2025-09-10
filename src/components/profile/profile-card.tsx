@@ -19,6 +19,7 @@ export function ProfileCard({ session }: { session: Session }) {
         <p className="text-muted-foreground">
           {session ? session.user?.email : "No email available"}
         </p>
+        <p className="mt-4 break-all">{session?.user?.bio}</p>
       </div>
       <div>
         <EditProfileDialog />

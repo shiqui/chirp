@@ -40,11 +40,17 @@ export async function UserTooltip({
           ))}
       </div>
 
-      <p className="text-lg">{author.name}</p>
+      <p className="text-lg font-semibold">{author.name}</p>
+
+      <p className="text-sm break-all">{author.bio}</p>
 
       <div className="flex gap-2">
-        <p className="">{followersCount} followers</p>
-        <p>{followingCount} following</p>
+        <p>
+          <span className="font-semibold">{followersCount}</span> followers
+        </p>
+        <p>
+          <span className="font-semibold">{followingCount}</span> following
+        </p>
       </div>
     </div>
   );

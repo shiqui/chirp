@@ -34,7 +34,7 @@ export function PostCard({ post }: { post: PostWithAuthor }) {
         </div>
 
         <Link href={`post/${post.id}`}>
-          <p className="whitespace-pre-wrap">{post.content}</p>
+          <p className="whitespace-pre-wrap break-all">{post.content}</p>
         </Link>
       </div>
     </Card>

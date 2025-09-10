@@ -52,10 +52,19 @@ export async function updateUserProfile(
       error: "Username is too long" as const,
     };
   }
+
+  const bio = formData.get("bio")?.toString();
+  if (bio && bio.length > 160) {
+    return {
+      timestamp: Date.now(),
+      success: false as const,
+      error: "Bio is too long" as const,
+    };
+  }
   try {
     await db
       .update(users)
-      .set({ name: username, updatedAt: new Date() })
+      .set({ name: username, updatedAt: new Date(), bio })
       .where(eq(users.id, authorId));
   } catch (error) {
     return {
