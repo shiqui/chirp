@@ -110,3 +110,21 @@ export const posts = pgTable("post", {
 export const authorPostRelations = relations(posts, ({ one }) => ({
   author: one(users, { fields: [posts.authorId], references: [users.id] }),
 }));
+
+export const follows = pgTable(
+  "follow",
+  {
+    followerId: text("follower_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    followingId: text("following_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+  },
+  (follow) => [
+    primaryKey({
+      columns: [follow.followerId, follow.followingId],
+    }),
+  ]
+);

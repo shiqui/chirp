@@ -1,7 +1,7 @@
 "use server";
 import { auth } from "@/lib/auth";
-import { eq } from "drizzle-orm/sql/expressions/conditions";
-import { users } from "../schema";
+import { and, eq } from "drizzle-orm/sql/expressions/conditions";
+import { follows, users } from "../schema";
 import { db } from "..";
 import { revalidatePath } from "next/cache";
 
@@ -66,6 +66,80 @@ export async function updateUserProfile(
   }
 
   revalidatePath("/profile");
+  return {
+    timestamp: Date.now(),
+    success: true as const,
+  };
+}
+
+export async function followUser(currentState: Result | null, id: string) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return {
+      timestamp: Date.now(),
+      success: false as const,
+      error: "You must be signed in to follow a user" as const,
+    };
+  }
+  if (session.user.id === id) {
+    return {
+      timestamp: Date.now(),
+      success: false as const,
+      error: "You cannot follow yourself" as const,
+    };
+  }
+  try {
+    await db.insert(follows).values({
+      followerId: session.user.id,
+      followingId: id,
+    });
+  } catch (error) {
+    return {
+      timestamp: Date.now(),
+      success: false as const,
+      error: "Database error" as const,
+    };
+  }
+  revalidatePath("/");
+  return {
+    timestamp: Date.now(),
+    success: true as const,
+  };
+}
+
+export async function unfollowUser(currentState: Result | null, id: string) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return {
+      timestamp: Date.now(),
+      success: false as const,
+      error: "You must be signed in to unfollow a user" as const,
+    };
+  }
+  if (session.user.id === id) {
+    return {
+      timestamp: Date.now(),
+      success: false as const,
+      error: "You cannot unfollow yourself" as const,
+    };
+  }
+  try {
+    await db
+      .delete(follows)
+      .where(
+        and(
+          eq(follows.followerId, session.user.id),
+          eq(follows.followingId, id)
+        )
+      );
+  } catch (error) {
+    return {
+      timestamp: Date.now(),
+      success: false as const,
+      error: "Database error" as const,
+    };
+  }
+  revalidatePath("/");
   return {
     timestamp: Date.now(),
     success: true as const,
