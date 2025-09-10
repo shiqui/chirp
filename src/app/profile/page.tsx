@@ -1,8 +1,11 @@
 import { PostCard } from "@/components/feed/post-card";
 import { ProfileCard } from "@/components/profile/profile-card";
 import { getPostsByAuthorId } from "@/db/queries/post";
+import {
+  getFollowerCountByUserId,
+  getFollowingCountByUserId,
+} from "@/db/queries/user";
 import { auth } from "@/lib/auth";
-import { get } from "http";
 import { StickyNoteIcon } from "lucide-react";
 
 export default async function ProfilePage() {
@@ -12,10 +15,19 @@ export default async function ProfilePage() {
     return <p className="p-6">Sign in to see your profile</p>;
   }
   const posts = await getPostsByAuthorId(session.user.id);
+  const [followerCount, followingCount] = await Promise.all([
+    getFollowerCountByUserId(session.user.id),
+    getFollowingCountByUserId(session.user.id),
+  ]);
+
   return (
     <div className="w-full h-full flex flex-col gap-4 items-center">
       <div className="sticky top-0 py-6 w-full z-10 bg-gradient-to-b from-background from-90% to-transparent">
-        <ProfileCard session={session} />
+        <ProfileCard
+          session={session}
+          followerCount={followerCount}
+          followingCount={followingCount}
+        />
         <h2 className="text-xl mt-4 flex items-center gap-2">
           Recent Posts
           <StickyNoteIcon />

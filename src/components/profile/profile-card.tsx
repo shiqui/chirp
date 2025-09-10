@@ -3,7 +3,15 @@ import { Card } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { EditProfileDialog } from "./edit-profile-dialog";
 
-export function ProfileCard({ session }: { session: Session }) {
+export function ProfileCard({
+  session,
+  followerCount,
+  followingCount,
+}: {
+  session: Session;
+  followerCount: number;
+  followingCount: number;
+}) {
   return (
     <Card className="w-full flex flex-row gap-6 p-6">
       <Avatar className="w-24 h-24">
@@ -19,6 +27,14 @@ export function ProfileCard({ session }: { session: Session }) {
         <p className="text-muted-foreground">
           {session ? session.user?.email : "No email available"}
         </p>
+        <div className="flex gap-2">
+          <p>
+            <span className="font-semibold">{followerCount}</span> followers
+          </p>
+          <p>
+            <span className="font-semibold">{followingCount}</span> following
+          </p>
+        </div>
         <p className="mt-4 break-all">{session?.user?.bio}</p>
       </div>
       <div>

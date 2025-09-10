@@ -1,5 +1,5 @@
 import {
-  getFollowersCountByUserId,
+  getFollowerCountByUserId,
   getFollowingCountByUserId,
   isFollowing,
 } from "@/db/queries/user";
@@ -17,7 +17,7 @@ export async function UserTooltip({
   const userId = session?.user?.id;
 
   const [followersCount, followingCount] = await Promise.all([
-    getFollowersCountByUserId(author.id),
+    getFollowerCountByUserId(author.id),
     getFollowingCountByUserId(author.id),
   ]);
   const following = userId ? await isFollowing(userId, author.id) : false;

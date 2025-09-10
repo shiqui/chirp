@@ -2,12 +2,12 @@ import { count, eq, and } from "drizzle-orm";
 import { db } from "..";
 import { follows } from "../schema";
 
-export async function getFollowersCountByUserId(id: string) {
-  const [{ count: followers }] = await db
+export async function getFollowerCountByUserId(id: string) {
+  const [{ count: follower }] = await db
     .select({ count: count() })
     .from(follows)
     .where(eq(follows.followingId, id));
-  return followers;
+  return follower;
 }
 
 export async function getFollowingCountByUserId(id: string) {
