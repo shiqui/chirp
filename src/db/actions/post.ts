@@ -48,9 +48,26 @@ export const createPost = async (
     };
   }
 
-  const emojiRegex =
-    /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
-  if (!emojiRegex.test(content)) {
+  if (content.length > 255) {
+    return {
+      timestamp: Date.now(),
+      success: false as const,
+      error: "Content is too long" as const,
+    };
+  }
+
+  const newlineCount = (content.match(/\n/g) || []).length;
+  if (newlineCount > 20) {
+    return {
+      timestamp: Date.now(),
+      success: false as const,
+      error: "Content contains too many newlines" as const,
+    };
+  }
+
+  const emojiOnlyRegex =
+    /^(?:\p{Emoji}(?:\p{Emoji_Modifier}|\uFE0F)?(?:\u200D\p{Emoji})*|\s|\n|\r)+$/gu;
+  if (!emojiOnlyRegex.test(content)) {
     return {
       timestamp: Date.now(),
       success: false as const,
