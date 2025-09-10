@@ -58,13 +58,14 @@ export async function getEmojisOfTheDay() {
   const frequencyMap = new Map<string, number>();
   postsToday.forEach((post) => {
     const content = post.content ?? "";
-    const groups = content.matchAll(
-      /(?:\p{Emoji}(?:\p{Emoji_Modifier}|\uFE0F)?(?:\u200D\p{Emoji})*)/gu
+    const groups = Array.from(
+      content.matchAll(
+        /(?:\p{Emoji}(?:\p{Emoji_Modifier}|\uFE0F)?(?:\u200D\p{Emoji})*)/gu
+      )
     );
     groups.forEach((emojis) => {
-      emojis.forEach((emoji) => {
-        frequencyMap.set(emoji, (frequencyMap.get(emoji) || 0) + 1);
-      });
+      const emoji = emojis[0];
+      frequencyMap.set(emoji, (frequencyMap.get(emoji) || 0) + 1);
     });
   });
 
