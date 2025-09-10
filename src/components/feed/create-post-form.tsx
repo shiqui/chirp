@@ -2,12 +2,12 @@
 
 import { Session } from "next-auth";
 import { Card } from "../ui/card";
-import { useActionState, useEffect, useMemo, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { createPost } from "@/db/actions/post";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { AlertCircleIcon, CircleAlert, LoaderCircle, Send } from "lucide-react";
+import { AlertCircleIcon, LoaderCircle, Send } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
 export default function CreatePostForm({

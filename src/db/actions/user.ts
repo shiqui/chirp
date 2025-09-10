@@ -67,6 +67,7 @@ export async function updateUserProfile(
       .set({ name: username, updatedAt: new Date(), bio })
       .where(eq(users.id, authorId));
   } catch (error) {
+    console.error(error);
     return {
       timestamp: Date.now(),
       success: false as const,
@@ -103,6 +104,7 @@ export async function followUser(currentState: Result | null, id: string) {
       followingId: id,
     });
   } catch (error) {
+    console.error(error);
     return {
       timestamp: Date.now(),
       success: false as const,
@@ -142,6 +144,7 @@ export async function unfollowUser(currentState: Result | null, id: string) {
         )
       );
   } catch (error) {
+    console.error(error);
     return {
       timestamp: Date.now(),
       success: false as const,

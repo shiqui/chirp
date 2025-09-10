@@ -18,7 +18,7 @@ export default async function Page({
         <span className="italic">ERR-UHHH...</span>
         <span className="text-3xl">😭</span>
         <span className="italic">
-          I couldn't find this post for you... sorry!
+          I could not find this post for you... sorry!
         </span>
       </div>
     );
