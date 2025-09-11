@@ -6,7 +6,7 @@ export default async function TopEmoji() {
   const emojis = await getEmojisOfTheDay();
 
   return (
-    <div className="sticky top-20">
+    <div className="top-20">
       <h1 className="text-xl mb-4 flex items-center gap-2">
         Emoji of the Day
         <Flame />

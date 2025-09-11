@@ -31,7 +31,7 @@ export default async function ProfilePage() {
 
   return (
     <div className="w-full h-full flex flex-col gap-4 items-center">
-      <div className="sticky top-0 pt-6 w-full z-10 bg-gradient-to-b from-background from-90% to-transparent">
+      <div className="sticky top-14 sm:top-0 pt-6 w-full z-10 bg-gradient-to-b from-background from-90% to-transparent">
         <ProfileCard
           session={session}
           followerCount={followerCount}

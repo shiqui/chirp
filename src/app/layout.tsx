@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import SideNav from "@/components/layout/side-nav";
+import { SideNav, MobileNav, TopNav, RightPane } from "@/components/layout/nav";
 import { Toaster } from "@/components/ui/sonner";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
-import TopEmoji from "@/components/layout/top-emoji";
 
 export const metadata: Metadata = {
   title: "Chirp",
   description: "Emoji only!",
 };
+
+// Responsive reminder:
+// sm: mobile
+// md: tablet
+// lg: laptop
+// xl: desktop
 
 export default function RootLayout({
   children,
@@ -28,14 +32,23 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {modal}
-          <div className="grid grid-cols-3 h-full">
-            <div className="relative">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 h-full">
+            <div className="sm:hidden">
+              <TopNav />
+            </div>
+
+            <div className="hidden sm:block relative">
               <SideNav />
             </div>
-            <div>{children}</div>
-            <div className="relative p-6 w-full">
-              <ThemeToggle />
-              <TopEmoji />
+
+            <div className="p-4 pt-14 pb-24 sm:p-4">{children}</div>
+
+            <div className="hidden lg:block">
+              <RightPane />
+            </div>
+
+            <div className="sm:hidden">
+              <MobileNav />
             </div>
           </div>
           <Toaster />

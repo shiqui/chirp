@@ -9,6 +9,13 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { AlertCircleIcon, LoaderCircle, Send } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../ui/drawer";
 
 export default function CreatePostForm({
   session,
@@ -45,7 +52,7 @@ export default function CreatePostForm({
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="What's on your mind? Emojis only!"
-          className="field-sizing-content resize-none"
+          className="field-sizing-content resize-none max-h-64"
         />
         {createPostState?.error && (
           <ServerAlertCard warning={createPostState.error} />
@@ -66,5 +73,62 @@ function ServerAlertCard({ warning }: { warning: string }) {
       <AlertTitle>Unable to submit this post.</AlertTitle>
       <AlertDescription className="text-sm">{warning}</AlertDescription>
     </Alert>
+  );
+}
+
+export function CreatePostDrawer({ session }: { session: Session | null }) {
+  const [createPostState, action, pending] = useActionState(createPost, null);
+  const [content, setContent] = useState("");
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (createPostState?.success) {
+      toast("Post created.", {
+        description: new Date(createPostState.timestamp).toDateString(),
+      });
+      setContent("");
+      setOpen(false);
+    }
+  }, [createPostState?.timestamp]);
+
+  return (
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
+        <Button
+          variant="ghost"
+          className="flex flex-col w-full justify-start text-sm h-fit gap-0"
+        >
+          <Send />
+          <p>Post</p>
+        </Button>
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Create a new post</DrawerTitle>
+        </DrawerHeader>
+        {session ? (
+          <form action={action} className="flex flex-col gap-4 p-4">
+            <Textarea
+              name="content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder="What's on your mind? Emojis only!"
+              className="field-sizing-content resize-none max-h-64"
+            />
+            {createPostState?.error && (
+              <ServerAlertCard warning={createPostState.error} />
+            )}
+            <Button type="submit" disabled={pending || !content.trim()}>
+              {pending ? "" : "Post"}
+              {pending ? <LoaderCircle className="animate-spin" /> : <Send />}
+            </Button>
+          </form>
+        ) : (
+          <p className="text-center text-muted-foreground">
+            Sign in to share your thoughts!
+          </p>
+        )}
+      </DrawerContent>
+    </Drawer>
   );
 }
