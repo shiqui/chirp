@@ -11,7 +11,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     sessionsTable: sessions,
     verificationTokensTable: verificationTokens,
   }),
-  providers: [GitHub],
+  providers: [GitHub({ issuer: "https://github.com/login/oauth" })],
 });
 
 declare module "next-auth" {
